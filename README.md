@@ -4,7 +4,7 @@ npm i -s observable-tree
 
 **create new Observable:**
 ```
-const Observable = require('./observable');
+const Observable = require('observable-data-holder');
 
 let observable = new Observable({
   family: {
