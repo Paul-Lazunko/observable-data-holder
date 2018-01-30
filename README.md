@@ -1,5 +1,3 @@
-#Observable-tree
-
 npm i -s observable-tree
 
 **create new Observable:**
