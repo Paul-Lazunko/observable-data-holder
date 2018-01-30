@@ -1,4 +1,4 @@
-npm i -s observable-tree
+npm i -s observable-data-holder
 
 **create new Observable:**
 ```
