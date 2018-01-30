@@ -1,0 +1,25 @@
+{
+  "name": "observable-tree",
+  "version": "1.0.0",
+  "description": "Small observable library for Node JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paul-Lazunko/observable-tree.git"
+  },
+  "keywords": [
+    "Observable",
+    "Node JS",
+    "Javascript",
+    "Subscribers"
+  ],
+  "author": "Paul Lazunko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Paul-Lazunko/observable-tree/issues"
+  },
+  "homepage": "https://github.com/Paul-Lazunko/observable-tree#readme"
+}

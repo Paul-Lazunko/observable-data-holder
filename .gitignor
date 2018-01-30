@@ -1,0 +1,12 @@
+# Editors:
+.idea
+
+# Vendor:
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Logs:
+logs
+*.log
