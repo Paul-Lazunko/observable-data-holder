@@ -1,6 +1,6 @@
 {
   "name": "observable-data-holder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Small observable library for Node JS",
   "main": "index.js",
   "scripts": {
