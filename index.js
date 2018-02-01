@@ -37,62 +37,64 @@ const ObservableArray = function( data, designation, rootContext ) {
 
     if ( typeof Array.prototype[ key ] === 'function' && ChangePropertyArrayPrototypeMethods.indexOf( key ) >= 0 ) {
 
-    if ( ! instance.items.hasOwnProperty( key ) ) {
+      if ( ! instance.items.hasOwnProperty( key ) ) {
 
-      Object.defineProperty( instance.items, key, {
+        Object.defineProperty( instance.items, key, {
 
-        enumerable: false,
+          enumerable: false,
 
-        value:  (arguments) => {
+          value:  (arguments) => {
 
-        Array.prototype[ key ].apply( instance.items, [arguments] );
+            Array.prototype[ key ].apply( instance.items, [arguments] );
 
-      instance.items.map( ( item, index ) => {
+            instance.items.map( ( item, index ) => {
 
-        if ( Array.isArray( item ) && ! ( item instanceof ObservableArray ) ) {
+              if ( Array.isArray( item ) && ! ( item instanceof ObservableArray ) ) {
 
-        instance.items[ index ] = new ObservableArray( item, instance.designation + '[' + index + ']', instance.rootContext ).items
+                instance.items[ index ] = new ObservableArray( item, instance.designation + '[' + index + ']', instance.rootContext ).items
 
-      } else {
+              } else {
 
-        if ( item && typeof item === 'object' && ! ( item instanceof Observable ) ) {
+                if ( item && typeof item === 'object' && ! ( item instanceof Observable ) ) {
 
-          instance.items[ index ] = new Observable( item, instance.designation + '[' + index + ']', instance );
+                  instance.items[ index ] = new Observable( item, instance.designation + '[' + index + ']', instance );
 
-        }
+                }
+
+              }
+
+            });
+
+            instance.rootContext.changeProperty( instance.designation, instance.items );
+
+            return instance.items;
+
+          }
+
+        });
 
       }
-
-    });
-
-      instance.rootContext.changeProperty( instance.designation, instance.items );
-
     }
 
-    });
-
-    }
-  }
-
-});
+  });
 
   instance.items.map( ( item, index ) => {
 
     if ( Array.isArray( item ) && ! ( item instanceof ObservableArray ) ) {
 
-    instance.items[ index ] = new ObservableArray( item, instance.designation + '[' + index + ']', instance.rootContext ).items
+      instance.items[ index ] = new ObservableArray( item, instance.designation + '[' + index + ']', instance.rootContext ).items
 
-  } else {
+    } else {
 
-    if ( item && typeof item === 'object' && ! ( item instanceof Observable ) ) {
+      if ( item && typeof item === 'object' && ! ( item instanceof Observable ) ) {
 
-      instance.items[ index ] = new Observable( item, instance.designation + '[' + index + ']', instance );
+        instance.items[ index ] = new Observable( item, instance.designation + '[' + index + ']', instance );
+
+      }
 
     }
 
-  }
-
-});
+  });
 
   return instance;
 
@@ -152,7 +154,7 @@ Observable.prototype.initSubscribers = function() {
 
       s.apply( self, [ target ] )
 
-  });
+    });
 
   }
 };
@@ -167,33 +169,33 @@ Observable.prototype.toObject = function () {
 
     if ( self[ prop ] instanceof Observable ) {
 
-    data[ prop ] = self[ prop ].toObject();
+      data[ prop ] = self[ prop ].toObject();
 
-  } else if ( Array.isArray( self[ prop ] ) ) {
+    } else if ( Array.isArray( self[ prop ] ) ) {
 
-    data[ prop ] = [];
+      data[ prop ] = [];
 
-    self[ prop ].map( item => {
+      self[ prop ].map( item => {
 
-      if ( item instanceof Observable ) {
+        if ( item instanceof Observable ) {
 
-      data[ prop ].push( item.toObject() );
+          data[ prop ].push( item.toObject() );
+
+        } else {
+
+          data[ prop ].push( item );
+
+        }
+
+      });
 
     } else {
 
-      data[ prop ].push( item );
+      data[ prop ] = self[ prop ];
 
     }
 
   });
-
-  } else {
-
-    data[ prop ] = self[ prop ];
-
-  }
-
-});
 
   return data;
 
@@ -229,11 +231,11 @@ Observable.prototype.findRoot = function( item ) {
 
       if ( self.rootContext[ prop ].designation === self.designation ) {
 
-      _item = prop;
+        _item = prop;
 
-    }
+      }
 
-  });
+    });
 
     return self.rootContext.findRoot( _item );
 
@@ -342,7 +344,7 @@ Observable.prototype.changeProperty = function( key, value ) {
 
             subscriber.apply( self, [ value instanceof Observable ? value.toObject() : value instanceof ObservableArray ? value.items : value ] );
 
-        });
+          });
         }
 
         if ( this.designation === prop ) {
@@ -351,7 +353,7 @@ Observable.prototype.changeProperty = function( key, value ) {
 
             subscriber.apply( self, [ self instanceof Observable ? self.toObject() : self ] );
 
-        });
+          });
 
         }
 
@@ -366,7 +368,7 @@ Observable.prototype.changeProperty = function( key, value ) {
 
               subscriber.apply( self, [  rc instanceof Observable ? rc.toObject() : rc ] );
 
-          });
+            });
 
           }
 
@@ -379,7 +381,7 @@ Observable.prototype.changeProperty = function( key, value ) {
           this.constructor.subscribers[ prop ].map( subscriber => {
             subscriber.apply( self, [ value instanceof Observable ? value.toObject() : value ] );
 
-        });
+          });
 
         }
       }
